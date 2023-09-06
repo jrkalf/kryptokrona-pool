@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kryptokrona-cryptopool
+  namespace: kryptokrona
+spec:
+  serviceName: kryptokrona-cryptopool
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kryptokrona-cryptopool
+  template:
+    metadata:
+      labels:
+        app: kryptokrona-cryptopool
+    spec:
+      containers:
+      - name: cryptopool
+        image: jrkalf/kryptokrona-nodejs-pool:latest
+        command: ["sh", "-c"]
+        args: ["node init.js -config=/config/config.json"]
+        ports:
+        - containerPort: 8117
+          name: cryptopool-api
+        - containerPort: 3333
+          name: low-end-miners
+        - containerPort: 5555
+          name: medium-miners
+        - containerPort: 7777
+          name: high-end-miners
+        volumeMounts:
+        - name: kryptokrona-cryptopool-config
+          mountPath: /config
+      volumes:
+      - name: kryptokrona-cryptopool-config
+        configMap:
+          name: kryptokrona-cryptopool-config

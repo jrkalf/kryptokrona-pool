@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kryptokrona-cryptopool
+  namespace: kryptokrona
+spec:
+  selector:
+    app: kryptokrona-cryptopool
+  ports:
+    - port: 8817
+      targetPort: 8817
+      name: "api-port"
+    - port: 3333
+      targetPort: 3333
+      name: "low-end-hardware"
+    - port: 5555
+      targetPort: 5555
+      name: "med-end-hardware"
+    - port: 7777
+      targetPort: 7777
+      name: "high-end-hardware"
+  type: LoadBalancer
