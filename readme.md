@@ -1,7 +1,7 @@
 # Kryptokrona-pool
 
 ## Origin
-Original code is based on the cryptonote-nodejs-pool. 
+Original code is based on the [cryptonote-nodejs-pool](https://github.com/dvandal/cryptonote-nodejs-pool). 
 
 ## Basics
 This repo contains a docker file to rebuild the code into a working x86_64 solution.
