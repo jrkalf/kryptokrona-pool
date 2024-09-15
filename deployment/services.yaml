@@ -7,8 +7,8 @@ spec:
   selector:
     app: kryptokrona-cryptopool
   ports:
-    - port: 8817
-      targetPort: 8817
+    - port: 8117
+      targetPort: 8117
       name: "api-port"
     - port: 3333
       targetPort: 3333
