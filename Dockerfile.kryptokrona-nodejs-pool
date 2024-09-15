@@ -1,0 +1,49 @@
+FROM ubuntu:22.04
+
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get -qqy upgrade \
+  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -yqq \
+    ca-certificates \
+    git \
+    libboost-all-dev \
+    libssl-dev \
+    make \
+    sed \
+    curl \
+    gcc \
+    g++ \
+    libsodium-dev\
+  && rm -rf /var/lib/apt/lists/* \
+  && apt -y autoclean \
+
+  && curl -sL https://deb.nodesource.com/setup_14.x | grep -v '^[a-z]*_deprecation_warning$' | bash - \
+  && apt-get update \
+  && apt-get install -y nodejs \
+  && rm -rf /var/lib/apt/lists/* \
+  && mkdir -p /config \
+  && git clone https://github.com/kryptokrona/kryptokrona-nodejs-pool.git /pool \
+  && rm -rf /pool/.git \
+  && rm -rf /pool/.github \
+  && rm -rf /pool/.gitignore \
+  && rm -rf /pool/website_example \
+  && rm -rf /pool/config_examples
+WORKDIR /pool/
+RUN sed -i 's/"async": "\^3.2.0*",/"async": "1.5.2",/' package.json \
+  && sed -i 's/"dateformat": "\^3.0.3",/"dateformat": "\^4.5.1",/' package.json \
+  && npm i \
+  && apt -y remove curl git make gcc g++ \
+  && apt -y autoremove \
+  && apt autoclean
+
+COPY example_config.json /pool/.
+
+EXPOSE 8117
+EXPOSE 8119
+EXPOSE 3333
+EXPOSE 4444
+EXPOSE 5555
+EXPOSE 7777
+EXPOSE 9999
+
+VOLUME ["/config"]
+CMD node init.js -config=/config/config.json

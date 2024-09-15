@@ -1,7 +1,11 @@
 # Kryptokrona-pool
 
 ## Origin
-Original code is based on the [cryptonote-nodejs-pool](https://github.com/dvandal/cryptonote-nodejs-pool). 
+Original code is based on the [cryptonote-nodejs-pool](https://github.com/dvandal/cryptonote-nodejs-pool).
+The file Dockerfile.dvandal-cryptonote is only compatible with x86_64. I can't get it to run on arm64 (Raspberry Pi 3 or 4).
+
+The newer file [Dockerfile](Dockerfile.kryptokrona-nodejs-pool) is based on the [kryptokrona-nodejs-pool](https://github.com/kryptokrona/kryptokrona-nodejs-pool) of the kryptokrona project itself.
+This file is compatible with arm64/v8.
 
 ## Basics
 This repo contains a docker file to rebuild the code into a working x86_64 solution.
